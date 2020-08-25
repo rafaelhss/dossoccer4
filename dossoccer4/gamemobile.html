@@ -1,0 +1,497 @@
+<html>
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168900921-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-168900921-1');
+        </script>
+        <script type="text/javascript" src="angular/jquery.min.js"></script>
+        <script src="angular/angular.min.js"></script>
+        <script src="js/consts.js"></script>    
+        <script src="js/gameplayutils.js"></script>
+        <script src="js/output.js"></script>
+        <script src="js/kickoff.js"></script>
+        <script src="js/pass.js"></script>
+        <script src="js/shot.js"></script>
+        <script src="js/dibre.js"></script>
+        <script src="js/touch.js"></script>
+        <script src="js/cmd.js"></script>
+        <script src="js/ia.js"></script>
+        <script src="js/utils.js"></script>  
+        <script src="js/gameover.js"></script>
+        <script src="js/game.js"></script>
+
+        
+        
+        
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: #002200;
+                height: 99%; 
+                overflow: hidden;  
+                font-family: "Comic Sans MS", sans-serif;
+            }
+            .teamx{
+                color: blue;
+            }
+            .teamo{
+                color: red;
+            }
+            .actionteamx{
+                color: #ccccff;
+            }
+            .actionteamo{
+                color: #ffcccc;
+            }
+            .playeroff {
+                text-decoration: line-through;
+            }
+            .footer{
+                width: 100%;
+                text-align:center;
+                font-size: 300%;
+                padding-top: 10px;
+            }
+            .area{                
+                width: 100%;
+                text-align:center;
+            }
+            .score{
+                height: 100%;
+                width: 80%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .scorenumber{
+                width: 10%;
+                font-size: 500%;   
+                text-shadow: 1px 1px 2px #FFFF00, 0 0 25px #FFFF00, 0 0 5px #FFFF00;
+            }
+            .teamname{
+                width: 40%;
+                height: 50%;
+                font-size: 300%;
+                word-wrap:break-word;
+            }
+            #versus{
+                font-size: 300%;   
+                text-shadow: 1px 1px 2px #FFFF00, 0 0 25px #FFFF00, 0 0 5px #FFFF00;
+            }
+            #matchtime{
+                font-size: 800%;
+                width: 20%;
+                text-shadow: 1px 1px 2px #CCCC00, 0 0 25px #CCCC00, 0 0 5px #CCCC00;
+            }
+            #panel{
+                height: 10%;
+                display: flex;
+                color: #CCCCCC;
+                background-image: linear-gradient(#002200, #339933, #002200);
+                
+            }
+            #opposingteamname{
+                text-shadow: 1px 1px 2px #FF0000, 0 0 25px #FF0000, 0 0 5px #FF0000;
+            }
+            #playerteamname{
+                text-shadow: 1px 1px 2px #0000FF, 0 0 25px #0000FF, 0 0 5px #0000FF;
+            }
+            #info {
+                width: 100%;
+                width: 100vw;
+                height: 18.5vw;
+                height: 18.5%;
+                border-radius: 25px;
+                display: flex;
+                padding: 0px 10px;
+                /*box-shadow: inset 0 0 2em #777777, 0 0 2em #777777;*/
+            }
+            #terminal {
+                width: 100%;
+                width: 100vw;
+                height: 28.5vw;
+                height: 28.5%;
+                background-color: #002200;
+                /*
+                box-shadow: inset 0 0 2em #777777, 0 0 2em #777777;
+                border-color: #BBBBBB;
+                
+                border-radius: 25px;
+                border-style: solid;
+                border-bottom: none;*/
+                
+            }
+            .actionmsgtable{
+                height: auto;
+                font-size: 300%;
+                text-align:left;
+                color: #BBBBBB;
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-top: 15px;
+                    
+                
+            }
+            #canvas {
+                display: inline;
+                box-shadow: inset 0 0 2em #777777, 0 0 2em #777777;
+                background-color: #006600;
+                touch-action: none;
+            }
+            #chances{
+                
+                height: 100%;
+                width: 20%;
+                border-radius: 5%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            #chances img{
+                width: 60%;
+                box-shadow: inset 0 0 1em #2a8000, 0 0 1em #2a8000;
+                border-radius: 20%;
+            }
+            .chancevalue{
+                color: #DDDDDD;    
+                text-shadow: 1px 1px 2px #FFFF99, 0 0 25px #666666, 0 0 5px #333333;
+                font: bold italic;
+                text-align: center;
+                
+                
+            }
+            .chancerow{
+                justify-content: center;
+                align-items: center;
+                display: flex;
+                width: 100%;
+            }
+            .chancerowshotdibre{
+                font-size: 300%;   
+            }
+            .chancerowpass{
+                font-size: 150%;
+            }
+            .chancerowpass .chancevalue{
+                border: solid;
+                border-color: 2a6600;
+                width: 33%;
+                
+            }
+            .field{
+                background-color: #2a6600;
+                height: 70%;
+                width: 40%;
+                
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: auto;
+                box-shadow: inset 0 0 1em #2a8000, 0 0 1em #2a8000;
+            }
+            .fieldcol{
+                height: 100%;
+                width: 30%;
+                background-color: aqua;
+            }
+            .sector{
+                box-shadow: inset 0 0 1em #2a8000, 0 0 1em #2a8000;
+                width: 100%;
+                height: 50%;
+                justify-content: center;
+                display: flex;
+                align-items: center;
+            }
+            .sectorunselect{
+                background-color: #009933;
+            }
+            .sectorselect{
+                background-color: #33cc33;
+            }
+            .keepercol{
+                box-shadow: inset 0 0 1em #2a8000, 0 0 1em #2a8000;
+                width: 5%;
+                height: 100%;            }
+            #holder{
+                background-color: #004d00;
+                height: 100%;
+                width: 33%;
+                border-radius: 10%;
+            }
+            .holderx{
+                box-shadow: inset 0 0 5em #0000FF;
+            }
+            .holdero{
+                box-shadow: inset 0 0 5em #FF0000;
+            }
+            #name{
+                height: 60%;
+                width: auto;
+                font-size: 300%;
+                color: #BBBBBB;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-shadow: 1px 1px 2px #666666, 0 0 25px #666666, 0 0 5px #333333;
+                border-radius: 5%;
+            }
+            #holderinfo{
+                height: 40%; 
+                width: 100%;
+            }
+            #avatar{
+                width: 50%;
+                font-size: 1200%;
+            }
+            #stats{
+                width: 100%;
+                height: inherit;
+                font-size: 170%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+            }
+            .stat{
+                width: 25%;
+            }
+            .statname{
+                color: #CCCCCC;
+                text-shadow: 0 0 3px #777777;  
+            }
+            .statvalue{
+                background-color: #00FF99;
+                box-shadow: inset 0 0 1em #2a8000, 0 0 1em #2a8000;
+                border-radius: 10%
+            }
+            .player{
+                padding: 5px;
+                font: bold italic;
+                color: #CCCCCC;
+                font-size: 200%;
+            }
+            
+            .playerdown{
+                margin-right: 10%;
+                font: bold italic;
+                opacity: 50%;
+                color: #222222;
+                text-decoration: line-through;
+            }
+            
+            
+            .playerx{
+                 text-shadow: 1px 1px 2px #0000FF, 0 0 25px #0000FF, 0 0 5px #0000FF;
+            }
+            .playero{
+                 text-shadow: 1px 1px 2px #FF0000, 0 0 25px #FF0000, 0 0 5px #FF0000;
+            }
+            #goal{
+                display: none;
+                background-image: linear-gradient(#002200, #339933, #002200);
+                width: 103%;
+            }
+            #goaltext{
+                font-size: 1300%;   
+                text-shadow: 10px 10px 20px #CCCC00, 25px 25px 25px #FFFF00, 20px -20px 5px #FFCC00;
+                color: #FFFF66;
+                -webkit-text-stroke: 5px #EEEEEE;
+                animation: shake 0.6s;
+                animation-iteration-count: infinite;
+            }
+
+            @keyframes shake {
+                  0% { transform: translate(1px, 1px) rotate(0deg); }
+                  10% { transform: translate(-1px, -2px) rotate(-2deg); }
+                  20% { transform: translate(-3px, 0px) rotate(2deg); }
+                  30% { transform: translate(3px, 2px) rotate(0deg); }
+                  40% { transform: translate(1px, -1px) rotate(2deg); }
+                  50% { transform: translate(-1px, 2px) rotate(-2deg); }
+                  60% { transform: translate(-3px, 1px) rotate(0deg); }
+                  70% { transform: translate(3px, 1px) rotate(-2deg); }
+                  80% { transform: translate(-1px, -1px) rotate(2deg); }
+                  90% { transform: translate(1px, 2px) rotate(0deg); }
+                  100% { transform: translate(1px, -2px) rotate(-2deg); }
+                }
+            #help{
+                box-shadow: inset 0 0 2em #777777, 0 0 2em #777777;
+                border-bottom: gray solid 2px;
+                border-top: white solid 2px;
+                border-radius: 2px; 
+                padding: 2%;
+                height: min-content;
+                width: 80%;
+                position: absolute;
+                left: 10%;
+                background-color: beige;
+                font-size: 350%;
+            }
+            
+            
+            .playerselected{  
+                color: #FFFF66;
+                -webkit-text-stroke: 5px #EEEEEE;
+                animation: shakes 500s;
+                animation-iteration-count: infinite;
+                
+            }
+        </style>
+
+    </head>
+    <body>
+        <div ng-app="myApp" ng-controller="myCtrl">
+            <div ng-hide="gameon">
+                <div class="area">
+                    <div>{{playerteamname}}</div>
+                    <div>VS</div>
+                    <div>{{opposingteamname}}</div>
+                    <div>
+                        <button class="teamo" ng-click="go()">
+                            VAAAAAAAAAAAAI
+                        </button>  
+                    </div>
+                </div>
+                
+                
+                
+            </div>
+            <div ng-show="gameon">
+                <div class ="area">
+                    <div id="panel">
+                        <div class="score">
+                            <div class="teamname" id="playerteamname">{{playerteamname}}</div>
+                            <div class="scorenumber" id="scorex">0</div>
+                            <div id="versus">x</div>
+                            <div class="scorenumber" id="scoreo">0</div>
+                            <div class="teamname" id="opposingteamname">{{opposingteamname}}</div>
+                        </div>
+                        <div id="matchtime"></div>
+                    </div>
+                </div>
+                <div class="area">
+                    <div id="info">
+                        <div id="holder">                            
+                            <div id="name"></div>
+                            <div id="holderinfo">
+                                <!--
+                                <div id="avatar">
+                                    <ion-icon name="walk"></ion-icon>
+                                </div>
+                                -->
+
+                                <div id="stats">
+                                    <div class="stat">
+                                        <div class="statname">att</div>
+                                        <div class="statvalue" id="att">8</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="statname">deff</div>
+                                        <div class="statvalue" id="def">5</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="statname">pass</div>
+                                        <div class="statvalue" id="pass">2</div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div id="field" class="field">
+                            <div class="keepercol" id="keeperx"><div>.</div></div>
+                            <div class="fieldcol">
+                                <div class="sector sectorunselect" id="sector0" ng-click="clicksector(0)"><div></div></div>
+                                <div class="sector sectorunselect" id="sector1" ng-click="clicksector(1)"><div></div></div>
+                            </div>
+                            <div class="fieldcol">
+                                <div class="sector secto runselect" id="sector2" ng-click="clicksector(2)"><div></div></div>
+                                <div class="sector sectorunselect" id="sector3" ng-click="clicksector(3)"><div></div></div>
+                            </div>
+                            <div class="fieldcol">
+                                <div class="sector sectorunselect" id="sector4" ng-click="clicksector(4)"><div></div></div>
+                                <div class="sector sectorunselect" id="sector5" ng-click="clicksector(5)"><div></div></div>
+                            </div>
+                            <div class="keepercol" id="keepero"><div>.</div></div>
+                        </div>
+                        <div id="chances">
+                            <div>
+                                <div class="chancerow chancerowshotdibre">
+                                    <div class="chance">
+                                        <div><img src="img/dibre.png"  id="imgchance1"></div>
+                                        <div id="chance1" class="chancevalue">40%</div>
+                                    </div>
+                                    <div class="chance">
+                                        <div><img src="img/dibre.png" id="imgchance2"></div>
+                                        <div id="chance2" class="chancevalue">10%</div>
+                                    </div>
+                                </div>
+                                <div class="chance chancepass">
+                                    <div class="chancerow chancerowpass">
+                                        <div id="chanceleftup" class="chancevalue">77%</div>
+                                        <div id="chanceup" class="chancevalue">77%</div>
+                                        <div id="chancerightup" class="chancevalue">77%</div>
+                                    </div>
+                                    <div class="chancerow chancerowpass">
+                                        <div id="chanceleft" class="chancevalue">77%</div>
+                                        <div class="chancevalue">
+                                            <img src="img/dibre.png" id="imgchance3">
+                                        </div>
+                                        <div id="chanceright" class="chancevalue">77%</div>
+                                    </div>
+                                    <div class="chancerow chancerowpass">
+                                        <div id="chanceleftdown" class="chancevalue">77%</div>
+                                        <div id="chancedown" class="chancevalue">77%</div>
+                                        <div id="chancerightdown" class="chancevalue">77%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>    
+                </div>
+                <div class="area" id="goal">
+                    <div id="goaltext">GoOoOoL</div>                
+                </div>
+                
+                <div class="area">
+                    <div id="terminal">
+                        <div class="actionmsgtable" id="actionmsgtable1"></div>
+                        <div class="actionmsgtable" id="actionmsgtable2"></div>
+                        <div class="actionmsgtable" id="actionmsgtable3"></div>
+                        <div class="actionmsgtable" id="actionmsgtable4"></div>
+                        <div class="actionmsgtable" id="actionmsgtable5"></div>
+                        <div class="actionmsgtable" id="actionmsgtable6"></div>
+                    </div>
+                </div>
+                <div class="area">
+                    <canvas id="canvas">
+                      You really badly need to use a different browser.
+                    </canvas>
+                </div>
+            </div>
+            <div ng-click="nexthelp()" id="help">
+                
+            </div>
+        </div>
+       <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            var canvasOffset = $("#canvas").offset();
+            var offsetX = canvasOffset.left;
+            var offsetY = canvasOffset.top;
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight * 0.45;
+
+        </script>
+        <script src="js/help.js"></script>
+        <script src="js/angularinterface.js"></script>
+    </body>
+    
+        
+</html>

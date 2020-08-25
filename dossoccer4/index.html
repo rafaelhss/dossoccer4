@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168900921-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-168900921-1');
+    </script>
+    <link rel="stylesheet" type="text/css" href="css/splash.css">  
+    <style>
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #002200;
+            font-family: "Comic Sans MS", sans-serif;
+        }
+        
+        .load {
+          color: #DDDDDD;
+          border-style: solid; 
+          background-color: black;
+        }
+        
+        .anim{
+            position: absolute;
+            top: 30%;
+            visibility: hidden;
+            width: 100%;
+        }
+        .animlogo{
+            position: absolute;
+            top: 30%;
+        }
+        
+        #terminal{
+            width: 100%;
+            height: 30%;
+        }
+        #winbar{
+            border-bottom: gray solid 2px;
+            border-top: white solid 2px;
+            background-image: linear-gradient(to right, #0033CC, #0099FF);
+            width: 100%;
+            height: 10%;
+            text-align: left;
+            color: aliceblue;
+            font-size: 200%;
+        }
+        
+        #blackscreen{
+            display: inline-block;
+            margin:0px;
+            width: 100%;
+            height: 90%;
+            background: black;
+        }
+        .term{
+            color: aliceblue;
+            font-size: 250%;
+        }
+        .text{
+            width: 100%;
+            text-align: center;
+            font-size: 1250%;
+        }
+        
+       .logo{
+            visibility: visible;
+            justify-content: center;
+            align-items: center;
+            background-image: linear-gradient(#002200, #339933, #002200);
+           
+            display: block;
+        }
+        .logotxt{
+            font-size: 1000%;   
+            text-shadow: 10px 10px 20px #CCCC00, 25px 25px 25px #FFFF00, 20px -20px 5px #FFCC00;
+            color: #CCCC00;
+            -webkit-text-stroke: 1px #FFFF4D;
+            font-weight: 999;
+            width: 100%;
+            text-align: center;
+        }
+        #logo3{
+            color: #FFFF66;
+            font-size: 2300%;
+            transform: skewY(20deg); 
+            text-align: center;
+            width: 100%;
+            position: absolute;
+            top: 35%;
+        }
+        #sublogotxt{
+            font-size: 300%;
+            color: #DDDD00;
+            text-shadow: 1px 1px 2px #CCCC00, 0 0 25px #CCCC00, 0 0 5px #CCCC00;
+            text-align: right;
+        }
+        .term1{
+            width: 100%;
+            height: 30%;
+        }
+        
+     
+        
+    </style>
+</head>
+<body>
+    
+
+
+    <div class="container">
+        <div>
+            <div>
+                <a href="escenarios.html">
+
+                    <div class="frame-1 anim">
+                        <div class="load term1">
+                            <pre class="term" id="term1">c:) Doss</pre>
+                        </div>
+                    </div>
+                    <div class="frame-2 anim text">
+                        Lembra?
+                    </div>
+                    <div id="terminal" class="frame-3 anim">
+                        <div id="winbar">
+                            DosSoccer.exe
+                        </div>
+                        <div class="load">
+                                <pre class="term" id="term">Seedorf domina a bola no meio. <br>Ronaldo livre na area.<br>1 - Bater no gol.<br>2 - Tentar o passe para Ronaldo.<br>:2_<br>Belo passe!<br></pre>
+                        </div>
+                    </div>
+                    <div class="frame-4 anim text">
+                        Ele voltou!
+                    </div>
+                    <div class="logo">
+                        <div class="logotxt animlogo frame-5">DosSoccer</div> 
+                        <div class="logotxt animlogo frame-6" id="logo3">3</div>
+                    </div> 
+                    <div class="frame-7 animlogo text" id="sublogotxt">
+                        Escenarios Edition
+                    </div>
+                </a>
+            </div>
+        </div>
+               <!--
+            <div  id="logo">
+                <div class="logotxt">
+ 
+                </div> 
+            </div>
+            <div class="frame-2" id="logo">
+                <div class="logotxt" id="logo3">3</div>
+            </div>
+            <div class="frame-3" id="sublogotxt">Escenarios Editon</div>
+          
+         
+            <h2 class="frame-1">This is CSS3</h2>
+            <h2 class="frame-2">No Javascript, No Flash</h2>
+            <h2 class="frame-3">You can stop using pointless amounts of script</h2>
+            <h2 class="frame-4">Now!</h2>
+            <h2 class="frame-5">
+                <span>Save the browser.</span> 
+                <span>Save Bandwidth.</span> 
+                <span>Love CSS3.</span>
+            </h2>
+-->
+        
+    </div>
+    <script>
+           
+        
+    setTimeout(function(){
+        window.location.assign("escenarios.html");
+    }, 15000)
+        
+    type("term1", 'occer.exe');
+    type("term", 'Ronaldo cara a cara com o goleiro @ 1 - bater colocado @ 2 - encher o pe');
+        
+    function type(elem, text){
+        
+        var textarea = document.getElementById(elem);
+        var speed = 50; //Writing speed in milliseconds
+        
+
+        var i = 0;
+
+        runner();
+
+        function runner() {
+          textarea.innerHTML = textarea.innerHTML + (text.charAt(i));
+          i++;
+          setTimeout(
+            function() {
+              if (text.charAt(i) != "@")
+                runner();
+              else {
+                textarea.innerHTML = textarea.innerHTML + "<br>";
+                i++;
+                runner();  
+              }
+            }, Math.floor(Math.random() * 220) + 50);
+        }
+    }
+
+</script>
+</body>
+</html>
